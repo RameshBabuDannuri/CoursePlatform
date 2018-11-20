@@ -3,7 +3,7 @@ package com.course.org.controller;
 import com.course.org.entity.Course;
 import com.course.org.entity.Review;
 import com.course.org.entity.Student;
-import com.course.org.error.exception.CourseNotCreateException;
+import com.course.org.error.exception.ResourseNotCreateException;
 import com.course.org.error.exception.ResourseNotFoundException;
 import com.course.org.service.CourseService;
 import com.course.org.service.StudentService;
@@ -48,7 +48,7 @@ public class CourseController {
     }
 
     @GetMapping("/courseByName/{courseName}")
-    ResponseEntity<?> findCourseByName(@PathVariable String courseName){
+    ResponseEntity<Course> findCourseByName(@PathVariable String courseName){
         Course course =   courseService.findByName(courseName);
 
         if (course == null){
@@ -100,46 +100,14 @@ public class CourseController {
         }
         return new ResponseEntity<>(students , HttpStatus.OK);
     }
-    @GetMapping("/courses/highestRating")
-    ResponseEntity<List<Course>> getHighestRatedCourses(){
-        List<Course> courses =  courseService.findAll();
 
-        int sumOfRating = 0;
-        float avgRating;
-        float maxAvgRating = 0;
-        Iterator iterator = courses.iterator();
-
-        List<Course> bestCourses = new ArrayList<>();
-
-        while (iterator.hasNext()){
-
-            Course course = (Course) iterator.next();
-
-            List<Review> reviews = course.getReviews();
-            int n = reviews.size();
-
-            for (Review review : reviews){
-                sumOfRating = sumOfRating+ review.getRating();
-            }
-            avgRating = sumOfRating/n;
-
-            if(maxAvgRating<=avgRating){
-                maxAvgRating = avgRating;
-                bestCourses.add(course);
-            }
-
-            sumOfRating = 0;
-        }
-        return new ResponseEntity<>(bestCourses , HttpStatus.OK);
-
-    }
     @PostMapping("/courses")
      ResponseEntity<Course> createCourse( @RequestBody  Course course){
 
          course = courseService.save(course);
 
          if(course == null){
-             throw new CourseNotCreateException("course not created");
+             throw new ResourseNotCreateException("course not created");
          }
         // Set the location header for the newly created resource
         HttpHeaders responseHeaders = new HttpHeaders();
@@ -205,4 +173,37 @@ public class CourseController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    @GetMapping("/courses/highestRating")
+    ResponseEntity<List<Course>> getHighestRatedCourses(){
+        List<Course> courses =  courseService.findAll();
+
+        int sumOfRating = 0;
+        float avgRating;
+        float maxAvgRating = 0;
+        Iterator iterator = courses.iterator();
+
+        List<Course> bestCourses = new ArrayList<>();
+
+        while (iterator.hasNext()){
+
+            Course course = (Course) iterator.next();
+
+            List<Review> reviews = course.getReviews();
+            int n = reviews.size();
+
+            for (Review review : reviews){
+                sumOfRating = sumOfRating+ review.getRating();
+            }
+            avgRating = sumOfRating/n;
+
+            if(maxAvgRating<=avgRating){
+                maxAvgRating = avgRating;
+                bestCourses.add(course);
+            }
+
+            sumOfRating = 0;
+        }
+        return new ResponseEntity<>(bestCourses , HttpStatus.OK);
+
+    }
 }

@@ -96,12 +96,18 @@ public class StudentController {
         if (student1 == null){
             throw new ResourseNotFoundException("student with id "+student.getId()+" not found");
         }
-        student1.setFirstName(student.getFirstName());
-        student1.setLastName(student.getLastName());
-        student1.setEmail(student.getEmail());
-        studentService.save(student1);
+
+        student1 =  studentService.updateStudent(student);
         return new ResponseEntity<>(student1 , HttpStatus.OK);
     }
-
+    @DeleteMapping("/students/{studentId}")
+    ResponseEntity<?> deleteStudent(@PathVariable Long studentId){
+        Student student = studentService.getStudentById(studentId);
+        if (student == null){
+            throw new ResourseNotFoundException("Student with id "+studentId+" not found");
+        }
+        studentService.deleteStudent(student);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 
 }

@@ -2,13 +2,11 @@ package com.course.org.controller;
 
 import com.course.org.entity.Review;
 import com.course.org.error.exception.ResourseNotFoundException;
-import com.course.org.error.exception.ReviewNotFoundException;
 import com.course.org.service.ReviewService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.ResourceAccessException;
 
 import java.util.List;
 

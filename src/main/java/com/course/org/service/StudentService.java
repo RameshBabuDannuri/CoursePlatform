@@ -30,4 +30,12 @@ public class StudentService {
     public Student getStudentByEmail(String email) {
         return studentRepository.findByEmail(email);
     }
+
+    public Student updateStudent(Student student) {
+       return studentRepository.save(student);
+    }
+
+    public void deleteStudent(Student student) {
+        studentRepository.delete(student);
+    }
 }

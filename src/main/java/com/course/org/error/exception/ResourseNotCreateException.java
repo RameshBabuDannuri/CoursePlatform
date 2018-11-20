@@ -4,17 +4,17 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ResponseStatus(HttpStatus.BAD_REQUEST)
-public class CourseNotCreateException extends RuntimeException {
+public class ResourseNotCreateException extends RuntimeException {
     private static final Long serialVersionUID = 2L;
 
-    public CourseNotCreateException(){
+    public ResourseNotCreateException(){
 
     }
 
-    public CourseNotCreateException(String s) {
+    public ResourseNotCreateException(String s) {
         super(s);
     }
-    public CourseNotCreateException(String s , Throwable cause){
+    public ResourseNotCreateException(String s , Throwable cause){
         super(s,cause);
     }
 }
