@@ -3,6 +3,7 @@ package com.course.org.controller;
 import com.course.org.entity.Course;
 import com.course.org.entity.Student;
 import com.course.org.error.exception.ResourseNotFoundException;
+import com.course.org.error.exception.ResourseExistException;
 import com.course.org.service.CourseService;
 import com.course.org.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -83,7 +84,7 @@ public class StudentController {
     ResponseEntity<Student> createStudent(@RequestBody Student student){
         Student student1 = studentService.getStudentByEmail(student.getEmail());
         if (student1 != null){
-            throw new ResourseNotFoundException("this email  is already exist");
+            throw new ResourseExistException("this email -> "+ student.getEmail() +" is already exist");
         }
         studentService.save(student);
         return new ResponseEntity<>(student , HttpStatus.OK);
@@ -93,7 +94,7 @@ public class StudentController {
     ResponseEntity<Student> updateStudent(@RequestBody Student student){
         Student student1 = studentService.getStudentById(student.getId());
         if (student1 == null){
-            throw new ResourseNotFoundException("this student not available");
+            throw new ResourseNotFoundException("student with id "+student.getId()+" not found");
         }
         student1.setFirstName(student.getFirstName());
         student1.setLastName(student.getLastName());
