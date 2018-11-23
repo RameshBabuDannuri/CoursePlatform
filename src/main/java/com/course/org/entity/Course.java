@@ -1,5 +1,6 @@
 package com.course.org.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.CreationTimestamp;
@@ -8,26 +9,37 @@ import org.hibernate.annotations.UpdateTimestamp;
 import org.hibernate.validator.constraints.UniqueElements;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 import java.util.*;
 
 @Entity
 public class Course {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @JsonIgnoreProperties
     private Long id;
+
     @NotNull
-    @Column(unique = true)
+    @NotBlank(message = "please enter course name")
     private String name;
+
+    @NotBlank(message = "please enter the course price")
     private String price;
+    @NotBlank(message = "please enter the course description")
+    @Size(min = 10 , message = "please enter minimum 10 characters")
+    private String description;
 
-    @CreationTimestamp
-    private LocalDateTime createDate;
-
-    @UpdateTimestamp
-    private LocalDateTime updatedDate;
+    private Date startDate;
+    @JsonFormat(pattern = "yyyy-mm-dd")
+    private Date endDate;
+    @JsonFormat(pattern = "yyyy-mm-dd")
+    private Date created_at;
+    @JsonFormat(pattern = "yyyy-mm-dd")
+    private Date updated_at;
 
     @OneToMany(cascade = CascadeType.ALL,
                 fetch = FetchType.LAZY)
@@ -60,6 +72,15 @@ public class Course {
         this.name = name;
         this.price = price;
     }
+    @PrePersist
+    protected  void onCreate(){
+        this.created_at = new Date();
+    }
+
+    @PreUpdate
+    protected void onUpdate(){
+        this.updated_at = new Date();
+    }
 
     public Long getId() {
         return id;
@@ -81,20 +102,44 @@ public class Course {
         this.price = price;
     }
 
-    public LocalDateTime getCreateDate() {
-        return createDate;
+    public Date getStartDate() {
+        return startDate;
     }
 
-    public void setCreateDate(LocalDateTime createDate) {
-        this.createDate = createDate;
+    public void setStartDate(Date startDate) {
+        this.startDate = startDate;
     }
 
-    public LocalDateTime getUpdatedDate() {
-        return updatedDate;
+    public Date getEndDate() {
+        return endDate;
     }
 
-    public void setUpdatedDate(LocalDateTime updatedDate) {
-        this.updatedDate = updatedDate;
+    public void setEndDate(Date endDate) {
+        this.endDate = endDate;
+    }
+
+    public Date getCreated_at() {
+        return created_at;
+    }
+
+    public void setCreated_at(Date created_at) {
+        this.created_at = created_at;
+    }
+
+    public Date getUpdated_at() {
+        return updated_at;
+    }
+
+    public void setUpdated_at(Date updated_at) {
+        this.updated_at = updated_at;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public List<Review> getReviews() {
@@ -152,8 +197,8 @@ public class Course {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", price='" + price + '\'' +
-                ", createDate=" + createDate +
-                ", updatedDate=" + updatedDate +
+                ", createDate=" + created_at +
+                ", updatedDate=" + updated_at +
                 '}';
     }
 }

@@ -21,12 +21,12 @@ import static org.junit.Assert.assertNull;
 public class CourseRepositoryTest {
     private Logger logger = LoggerFactory.getLogger(this.getClass());
     @Autowired
-    CourseService courseService;
+    CourseRepository courseRepository;
 
     @Test
     public void findById(){
 
-        Course course = courseService.findById(30L);
+        Course course = courseRepository.getOne(1L);
         assertEquals("spring",course.getName());
 
         logger.info("Testing is running");
@@ -35,9 +35,9 @@ public class CourseRepositoryTest {
     @Test
     @DirtiesContext
     public void deleteById(){
-        Course course = courseService.findById(32L);
-        courseService.deleteCourse(course);
-        assertNull(courseService.findById(32L));
+        Course course = courseRepository.getOne(30L);
+        courseRepository.delete(course);
+        assertNull(courseRepository.findById(32L));
     }
 
     @Test
@@ -45,9 +45,9 @@ public class CourseRepositoryTest {
     public void createCourse(){
         Course course = new Course("spring mvc","2300");
 
-      Course c =   courseService.save(course);
+      Course c =   courseRepository.save(course);
 
-      Course c2 = courseService.findById(c.getId());
+      Course c2 = courseRepository.getOne(c.getId());
 
         assertEquals("spring mvc",c2.getName());
     }
