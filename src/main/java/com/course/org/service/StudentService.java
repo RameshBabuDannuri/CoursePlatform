@@ -81,7 +81,7 @@ public class StudentService {
         Student student = getStudentById(studentId);
         List<Course> courses = student.getCourses();
         if (courses == null){
-            throw new ResourseNotFoundException("this student with id "+studentId+" not registered any course");
+            throw new ResourseNotFoundException("this student with id"+studentId+" not registered any course");
         }
         return courses;
     }

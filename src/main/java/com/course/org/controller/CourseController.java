@@ -98,8 +98,8 @@ public class CourseController {
     }
 
     @GetMapping("/{courseId}/student")
-    public ResponseEntity<List<Student>> getCourseStudents(@PathVariable Long courseId){
-        List<Student> students = courseService.getCourseStudents(courseId);
+    public ResponseEntity<Set<Student>> getCourseStudents(@PathVariable Long courseId){
+        Set<Student> students = courseService.getCourseStudents(courseId);
         return new ResponseEntity<>(students , HttpStatus.OK);
     }
 

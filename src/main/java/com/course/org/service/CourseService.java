@@ -81,12 +81,12 @@ public class CourseService {
 
         Course course = getCourseById(courseId);
         Student s  = studentService.verifyStudent(student.getEmail());
-        List<Student> students = course.getStudents();
-        HashSet<Student> studentSet= new HashSet<>(students);
-        studentSet.addAll(students);
+        Set<Student> students = course.getStudents();
+        //HashSet<Student> studentSet= new HashSet<>(students);
+        //studentSet.addAll(students);
 
-        if (studentSet.contains(s)){
-            throw new ResourseExistException("'"+s.getEmail()+"' email already registered for this course");
+        if (students.contains(s)){
+            throw new ResourseExistException("'"+s.getEmail()+"' already registered to this course");
         }
 
         if (s == null){
@@ -101,9 +101,9 @@ public class CourseService {
         }
 
     }
-    public List<Student> getCourseStudents(Long courseId){
+    public Set<Student> getCourseStudents(Long courseId){
         Course course = getCourseById(courseId);
-        List<Student> students = course.getStudents();
+        Set<Student> students = course.getStudents();
         if (students == null){
             throw new ResourseNotFoundException("this course don't have  students");
         }

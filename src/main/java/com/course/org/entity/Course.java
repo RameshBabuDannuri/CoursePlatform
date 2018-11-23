@@ -57,7 +57,7 @@ public class Course {
             inverseJoinColumns=@JoinColumn(name="student_id")
     )
     @JsonIgnore
-    private List<Student> students;
+    private Set<Student> students;
 
     public Course() {
     }
@@ -157,11 +157,11 @@ public class Course {
     }
 
 
-    public List<Student> getStudents() {
+    public Set<Student> getStudents() {
         return students;
     }
 
-    public void setStudents(List<Student> students) {
+    public void setStudents(Set<Student> students) {
         this.students = students;
     }
 
@@ -170,7 +170,7 @@ public class Course {
     public void addStudent(Student theStudent) {
 
         if (students == null) {
-            students = new ArrayList<>();
+            students = new HashSet<>();
         }
             students.add(theStudent);
     }
