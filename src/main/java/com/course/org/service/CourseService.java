@@ -3,6 +3,7 @@ package com.course.org.service;
 import com.course.org.entity.Course;
 import com.course.org.entity.Review;
 import com.course.org.entity.Student;
+import com.course.org.error.exception.ResourseExistException;
 import com.course.org.error.exception.ResourseNotFoundException;
 import com.course.org.repository.CourseRepository;
 import org.slf4j.Logger;
@@ -12,10 +13,7 @@ import org.springframework.stereotype.Service;
 
 import javax.persistence.Column;
 import javax.transaction.Transactional;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 @Transactional
@@ -83,6 +81,13 @@ public class CourseService {
 
         Course course = getCourseById(courseId);
         Student s  = studentService.verifyStudent(student.getEmail());
+        List<Student> students = course.getStudents();
+        HashSet<Student> studentSet= new HashSet<>(students);
+        studentSet.addAll(students);
+
+        if (studentSet.contains(s)){
+            throw new ResourseExistException("'"+s.getEmail()+"' email already registered for this course");
+        }
 
         if (s == null){
             course.addStudent(student);
@@ -90,7 +95,6 @@ public class CourseService {
             return student1;
         }
         else {
-
             s.addCourse(course);
             saveOrUpdate(course);
             return s;
