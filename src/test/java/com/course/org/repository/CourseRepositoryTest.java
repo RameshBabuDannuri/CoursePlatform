@@ -43,7 +43,11 @@ public class CourseRepositoryTest {
     @Test
     @DirtiesContext
     public void createCourse(){
+<<<<<<< HEAD
         Course course = new Course("spring mvc","2300","web devlopment course");
+=======
+        Course course = new Course("spring mvc","2300");
+>>>>>>> a0cde94c8284bec91437a6a13735b54edcb30e99
 
       Course c =   courseRepository.save(course);
 

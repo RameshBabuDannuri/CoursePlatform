@@ -38,8 +38,13 @@ public class CoursePlatformApplication  implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 
+<<<<<<< HEAD
 
 			Course course1 = new Course( "Hibernate" , "2000","nice course");
+=======
+		/*
+			Course course1 = new Course("Hinbernate" , "3000");
+>>>>>>> a0cde94c8284bec91437a6a13735b54edcb30e99
 			courseRepository.save(course1);
 
 			Student student1 = new Student("sai","dannuri","sai.dannuri@gmail.com");
@@ -47,6 +52,10 @@ public class CoursePlatformApplication  implements CommandLineRunner {
 
 			studentRepository.save(student1);
 			courseRepository.save(course1);
+<<<<<<< HEAD
 
+=======
+		*/
+>>>>>>> a0cde94c8284bec91437a6a13735b54edcb30e99
 	}
 }

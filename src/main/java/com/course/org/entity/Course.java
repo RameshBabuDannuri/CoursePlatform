@@ -29,9 +29,14 @@ public class Course {
 
     @NotBlank(message = "please enter the course price")
     private String price;
+<<<<<<< HEAD
 
     @NotBlank(message = "please enter the course description")
     @Size(min = 5 , message = "please enter minimum 5 characters")
+=======
+    @NotBlank(message = "please enter the course description")
+    @Size(min = 10 , message = "please enter minimum 10 characters")
+>>>>>>> a0cde94c8284bec91437a6a13735b54edcb30e99
     private String description;
 
     private Date startDate;
@@ -63,12 +68,25 @@ public class Course {
     public Course() {
     }
 
+<<<<<<< HEAD
     public Course(String name,  String price,  String description) {
         this.name = name;
         this.price = price;
         this.description = description;
     }
 
+=======
+    public Course(String name,String price) {
+        this.name = name;
+        this.price = price;
+    }
+
+    public Course(Long id, String name, String price) {
+        this.id = id;
+        this.name = name;
+        this.price = price;
+    }
+>>>>>>> a0cde94c8284bec91437a6a13735b54edcb30e99
     @PrePersist
     protected  void onCreate(){
         this.created_at = new Date();
